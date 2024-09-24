@@ -1,4 +1,4 @@
-@extends('master.blade');
+@extends('master')
 
 @section('content')
 <div class="container m-5">

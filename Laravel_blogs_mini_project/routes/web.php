@@ -3,4 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 
-Route::get('/',[BlogController::class,'index'])->name('mainPage');
+Route::redirect('/', '/blogs');
+
+Route::get('/blogs',[BlogController::class,'index'])->name('mainPage');
+
+Route::post('/blogs/create', [BlogController::class,'create'])->name('blogCreate');

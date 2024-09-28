@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('image')->nullable();
             $table->char('rating',2)->default(1);
+            $table->number('fee');
             $table->char('address',30);
             $table->timestamps();
         });

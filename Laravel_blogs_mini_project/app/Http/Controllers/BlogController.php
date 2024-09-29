@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BlogController extends Controller
 {
@@ -13,11 +15,29 @@ class BlogController extends Controller
 
     // create blogs post
     public function create(Request $request){
-        // dd($request->all());
-        $this->checkBlogsValidation($request);
+        try {
+            // check validation
+            $this->checkBlogsValidation($request); // Validate the request
+            // dd($request->all()); // This will only execute if validation passes. //  now it shows
 
-        dd('well done');
-        dd($request->all());
+            // take data from $request
+            $data = $this->requestBlogData($request);
+
+            // dd($data); // simplified data than $request->all()
+
+            // adding data to db
+            Blog::create($data);
+
+            // Success Message
+            toast('Your Blog has been created...', 'success');
+
+            // going back to the display page carrying one session
+            return back()->with(['createSuccess'=>'Blogs Create Success...']);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            dd($e->errors()); // Dump the validation errors to debug.
+        }
     }
 
     // check blogs validation
@@ -28,7 +48,19 @@ class BlogController extends Controller
             'fee' => 'required',
             'address' => 'required' ,
             'rating' => 'required' ,
-            'image' => 'mimes:png,jpg,jpeg'
+            'image.*' => 'mimes:png,jpg,jpeg'
         ]);
+    }
+
+    // Request blog data
+    private function requestBlogData($formData){
+        return [
+            'title' => $formData->title , // title in $fromData indicates the value of the name attribute of the form
+            'description' => $formData->description ,
+            'fee' => $formData->fee ,
+            'address' => $formData->address ,
+            'rating' => $formData->rating ,
+            'image' => null
+        ];
     }
 }

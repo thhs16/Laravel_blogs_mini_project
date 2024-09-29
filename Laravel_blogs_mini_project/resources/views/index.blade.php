@@ -8,7 +8,11 @@
             <form action="{{ route('blogCreate') }}" id="blogForm" method="post" enctype="multipart/formdata">
                 @csrf
                 <div id="blogImgSpace"></div>
-                <input type="file" name="image" class="form-control mb-2" onchange="loadFile(event)">
+                <input type="file" name="image" class="form-control mb-2 @error('image') is-invalid @enderror" onchange="loadFile(event)">
+                @error('image')
+                    <div class=" invalid-feedback">{{ $message }}</div>
+                @enderror
+
                 <input type="text" name="title" class="form-control mb-2 @error('title') is-invalid @enderror" value="{{ old('title')}}" placeholder="Enter Blogs Title...">
                 @error('title')
                     <div class=" invalid-feedback">{{ $message }}</div>
@@ -61,9 +65,9 @@
                     <div class="d-flex justify-content-between">
                         <div class="">
                             <!-- i don't know whether adding d-flex in the above div could change their display -->
-                        <i class="fa-solid fa-money-bill text-primary mr-2"></i>10000 mmk |
-                        <i class="fa-solid fa-location-dot text-danger mr-2"></i>Yangon |
-                        <i class="fa-solid fa-star text-warning mr-2"></i>5 |
+                        <i class="fa-solid fa-money-bill text-primary mr-2"></i> 10000 mmk |
+                        <i class="fa-solid fa-location-dot text-danger mr-2"></i> Yangon |
+                        <i class="fa-solid fa-star text-warning mr-2"></i> 5
                         </div>
 
                         <div>

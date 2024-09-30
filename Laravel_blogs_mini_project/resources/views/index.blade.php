@@ -5,9 +5,11 @@
     <div class="row">
         <!-- Start of the Form -->
         <div class="col-4">
-            <form action="{{ route('blogCreate') }}" id="blogForm" method="post" enctype="multipart/formdata">
+            <form action="{{ route('blogCreate') }}" id="blogForm" method="POST" enctype="multipart/form-data">
                 @csrf
+
                 <div id="blogImgSpace"></div>
+
                 <input type="file" name="image" class="form-control mb-2 @error('image') is-invalid @enderror" onchange="loadFile(event)">
                 @error('image')
                     <div class=" invalid-feedback">{{ $message }}</div>
@@ -70,10 +72,10 @@
                         <i class="fa-solid fa-star text-warning mr-2"></i> 5
                         </div>
 
-                        <div>
-                            <button class="btn btn-primary"></button>
-                            <button class="btn btn-secondary"></button>
-                            <button class="btn btn-danger"></button>
+                        <div class=" text-center">
+                            <button class="btn btn-primary">SEE MORE</button>
+                            <button class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                         </div>
 
                     </div>

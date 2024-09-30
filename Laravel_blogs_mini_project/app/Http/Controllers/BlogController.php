@@ -15,29 +15,40 @@ class BlogController extends Controller
 
     // create blogs post
     public function create(Request $request){
-        try {
+        // try {
+
             // check validation
             $this->checkBlogsValidation($request); // Validate the request
-            // dd($request->all()); // This will only execute if validation passes. //  now it shows
 
             // take data from $request
-            $data = $this->requestBlogData($request);
+            $data = $this->requestBlogData($request); // simplified data than $request->all()
 
-            // dd($data); // simplified data than $request->all()
+            // Testing
+            // dd($request->hasFile('image'));
+            // dd($request->file());
+
+            // checking img presense in form data
+            if( $request->hasFile('image') ){
+                $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
+                $request->file('image')->move( public_path() . '/uploads' , $userImgName );
+                $data['image'] = $userImgName;
+            } else {
+                dd('Image is empty.');
+            }
 
             // adding data to db
             Blog::create($data);
 
-            // Success Message
-            toast('Your Blog has been created...', 'success');
+            // Success Message SweetAlert
+            toast('Your Blog Data has been created...', 'success');
 
-            // going back to the display page carrying one session
-            return back()->with(['createSuccess'=>'Blogs Create Success...']);
+            return back();
 
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            // Handle validation errors
-            dd($e->errors()); // Dump the validation errors to debug.
-        }
+
+        // } catch (\Illuminate\Validation\ValidationException $e) {
+        //     // Handle validation errors
+        //     dd($e->errors()); // Dump the validation errors to debug.
+        // }
     }
 
     // check blogs validation

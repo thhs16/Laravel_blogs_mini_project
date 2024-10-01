@@ -10,6 +10,7 @@ class BlogController extends Controller
 {
     // blogs list page
     public function index(){
+        
         return view('index');
     }
 
@@ -73,5 +74,7 @@ class BlogController extends Controller
             'rating' => $formData->rating ,
             'image' => null
         ];
+
+        $data = [];
     }
 }

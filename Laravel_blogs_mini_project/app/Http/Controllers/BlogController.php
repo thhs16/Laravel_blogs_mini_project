@@ -9,9 +9,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BlogController extends Controller
 {
     // blogs list page
-    public function index(){
-        
-        return view('index');
+    public function index(Request $request){
+
+        dd( $request );
+
+        // getting db data [ recent blogs first order ]
+        $data = Blog::orderBy('created_at','desc')
+                ->paginate(3);
+
+        return view('index', compact('data') );
     }
 
     // create blogs post

@@ -53,23 +53,45 @@
 
         <!-- Start of the Blogs' display -->
         <div class="col">
-            <div class="card shadow-sm">
+            <div class="row">
+                <div class="col-2">
+                    <h1>BLOGGY</h1>
+                </div>
+
+                <div class="col offset-6 mb-3">
+
+                    <form action="{{ route('mainPage') }}" method="GET">
+
+                        <div class="input-group mb-3">
+                            <input type="text" name="searchKey" class="form-control" placeholder="SEARCH..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button">ENTER</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+
+                </div>
+            </div>
+
+            @foreach ($data as $item)
+                <div class="card mb-3 shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <div class="">This is title</div>
-                        <div class="">5/4/2024</div>
+                        <div class="">{{ $item->title }}</div>
+                        <div class="">{{ $item->created_at->format('j-F-Y') }}</div>
                     </div>
 
                     <div class=" text-muted my-2">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat eaque natus aperiam, autem perspiciatis temporibus vel ab aliquid aliquam, expedita impedit minima. Nostrum, distinctio alias eius quia quasi aliquam libero ipsa exercitationem quidem magnam minus. Totam eaque cupiditate repudiandae quo libero fugit ea tenetur, esse porro magni vel. Provident, impedit.
+                        {{ Str::words($item->description, 20, '...') }}
                     </div>
 
                     <div class="d-flex justify-content-between">
                         <div class="">
                             <!-- i don't know whether adding d-flex in the above div could change their display -->
-                        <i class="fa-solid fa-money-bill text-primary mr-2"></i> 10000 mmk |
-                        <i class="fa-solid fa-location-dot text-danger mr-2"></i> Yangon |
-                        <i class="fa-solid fa-star text-warning mr-2"></i> 5
+                        <i class="fa-solid fa-money-bill text-primary mr-2"></i> {{ $item->fee }} mmk |
+                        <i class="fa-solid fa-location-dot text-danger mr-2"></i> {{ $item->address }} |
+                        <i class="fa-solid fa-star text-warning mr-2"></i> {{ $item->rating }}
                         </div>
 
                         <div class=" text-center">
@@ -80,6 +102,11 @@
 
                     </div>
                 </div>
+            </div>
+            @endforeach
+
+            <div class="d-flex justify-content-end">
+                {{ $data->links() }}
             </div>
         </div>
         <!-- End of the Blogs' display -->

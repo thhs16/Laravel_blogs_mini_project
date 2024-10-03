@@ -11,6 +11,10 @@ Route::post('/blogs/create', [BlogController::class,'create'])->name('blogCreate
 
 Route::get('/blogs/delete/{id}', [BlogController::class,'delete'])->name('blogDelete');
 
+Route::get('/blogs/details/{id}', [BlogController::class,'details'])->name('blogDetails');
+
+Route::get('/blogs/edit/{id}', [BlogController::class,'edit'])->name('blogEdit');
+
 // route testing
 // Route::post('/welcome', function () {
 //         return view('welcome');

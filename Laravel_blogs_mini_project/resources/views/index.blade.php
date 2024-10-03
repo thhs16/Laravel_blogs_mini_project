@@ -94,8 +94,9 @@
                         </div>
 
                         <div class=" text-center">
-                            <button class="btn btn-primary">SEE MORE</button>
-                            <button class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <a href="{{ route('blogDetails' , $item->id ) }}"><button class="btn btn-primary">SEE MORE</button></a>
+                            <a href="{{ route('blogEdit' , $item->id ) }}"><button class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                            {{-- <a href="{{ route('blogEdit' , $item->id ) }}"><button class="btn btn-secondary">details</button></a> --}}
                             <a href="{{ url('/blogs/delete/'.$item->id) }}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                         </div>
 

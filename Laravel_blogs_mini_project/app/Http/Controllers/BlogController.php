@@ -25,17 +25,12 @@ class BlogController extends Controller
 
     // create blogs post
     public function create(Request $request){
-        // try {
 
             // check validation
             $this->checkBlogsValidation($request); // Validate the request
 
             // take data from $request
             $data = $this->requestBlogData($request); // simplified data than $request->all()
-
-            // Testing
-            // dd($request->hasFile('image'));
-            // dd($request->file());
 
             // checking img presense in form data
             if( $request->hasFile('image') ){
@@ -54,11 +49,6 @@ class BlogController extends Controller
 
             return back();
 
-
-        // } catch (\Illuminate\Validation\ValidationException $e) {
-        //     // Handle validation errors
-        //     dd($e->errors()); // Dump the validation errors to debug.
-        // }
     }
 
     // delete blog
@@ -78,6 +68,23 @@ class BlogController extends Controller
         Blog::findOrFail($id)->delete();
         Alert::success('Deletion Success', 'Your blog has been deleted.'); // this is only displayed when user get to index.blad
         return back();
+    }
+
+    // Blog's details
+    public function details($id){
+        $blogDetails = Blog::where('id',$id)->first();
+        // I dunno why findOrFail() or find() is not working here although it works in above methods.
+
+        // dd($blogDetails->toArray());
+        return view('page_details', compact('blogDetails'));
+    }
+
+    // Blog's edit page
+    public function edit($id){
+
+        // getting blogs' data to show the existed db data first
+        $blogDetails = Blog::where('id',$id)->first();
+        return view('update', compact('blogDetails'));
     }
 
     // check blogs validation

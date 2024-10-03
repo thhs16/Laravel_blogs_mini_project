@@ -61,14 +61,13 @@
                 <div class="col offset-6 mb-3">
 
                     <form action="{{ route('mainPage') }}" method="GET">
-
                         <div class="input-group mb-3">
-                            <input type="text" name="searchKey" class="form-control" placeholder="SEARCH..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <input type="text" name="searchKey" class="form-control" value="{{ request('searchKey') }}" placeholder="SEARCH..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button">ENTER</button>
+                              <button class="btn btn-outline-secondary" type="submit">ENTER</button>
                             </div>
                         </div>
-                        
+
                     </form>
 
                 </div>
@@ -97,7 +96,7 @@
                         <div class=" text-center">
                             <button class="btn btn-primary">SEE MORE</button>
                             <button class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <a href="{{ url('/blogs/delete/'.$item->id) }}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                         </div>
 
                     </div>

@@ -9,12 +9,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BlogController extends Controller
 {
     // blogs list page
-    public function index(Request $request){
-
-        dd( $request );
+    public function index(){
 
         // getting db data [ recent blogs first order ]
-        $data = Blog::orderBy('created_at','desc')
+        $data = Blog::when( request('searchKey'), function($query){
+
+                $searchData = request('searchKey') ;
+                $query->whereAny( ['title' , 'description'] , 'like', '%'.$searchData.'%' );
+        })
+                ->orderBy('created_at','desc')
                 ->paginate(3);
 
         return view('index', compact('data') );
@@ -56,6 +59,25 @@ class BlogController extends Controller
         //     // Handle validation errors
         //     dd($e->errors()); // Dump the validation errors to debug.
         // }
+    }
+
+    // delete blog
+    public function delete($id){
+
+        $imageName = Blog::where('id', $id) ->first('image');
+        $imageName = $imageName['image'];
+
+        // dd($imageName);
+
+        // dd( file_exists( public_path('uploads/' . $imageName ) ));
+
+        if( $imageName != null  ){
+            unlink( public_path('uploads/' . $imageName ) );
+        }
+
+        Blog::findOrFail($id)->delete();
+        Alert::success('Deletion Success', 'Your blog has been deleted.'); // this is only displayed when user get to index.blad
+        return back();
     }
 
     // check blogs validation

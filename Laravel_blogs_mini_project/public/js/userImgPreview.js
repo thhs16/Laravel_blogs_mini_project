@@ -14,6 +14,6 @@
 
                     // putting the img tag
                     imgSpace.innerHTML = (blogImgTag);
-                    console.log('img preview success');
+                    // console.log('img preview success');
                 }
             }

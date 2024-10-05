@@ -87,6 +87,11 @@ class BlogController extends Controller
         return view('update', compact('blogDetails'));
     }
 
+    // Update page
+    public function update(Request $request){
+        dd($request);
+    }
+
     // check blogs validation
     private function checkBlogsValidation($request){
         return $validator = $request->validate([

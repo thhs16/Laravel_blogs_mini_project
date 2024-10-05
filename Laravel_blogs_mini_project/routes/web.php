@@ -15,6 +15,8 @@ Route::get('/blogs/details/{id}', [BlogController::class,'details'])->name('blog
 
 Route::get('/blogs/edit/{id}', [BlogController::class,'edit'])->name('blogEdit');
 
+Route::post('/blogs/update', [BlogController::class,'update'])->name('blogUpdate');
+
 // route testing
 // Route::post('/welcome', function () {
 //         return view('welcome');

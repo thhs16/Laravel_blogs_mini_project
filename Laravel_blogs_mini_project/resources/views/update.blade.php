@@ -16,17 +16,36 @@
                                 <img src="{{ asset('/uploads/'. $blogDetails->image ) }}" class=" img-thumbnail w-100" alt="">
                             </div>
                         @endif
-                        <input type="file" name="image" class="form-control mb-2 @error('image') is-invalid @enderror" onchange="loadFile(event)">
+
+                        <input type="file" name="image" class="form-control mb-2" onchange="loadFile(event)">
+
                     </div>
+
+
 
                     <div class="col-8">
 
-                            <input type="text" name="title" value="{{ $blogDetails->title }}" class=" form-control mb-2" >
-                            <textarea name="description" id="" cols="30" rows="10" class=" form-control mb-2"> {{ $blogDetails->description }}</textarea>
-                            <div class="">
+                            <input type="text" name="title" value="{{ $blogDetails->title }}" class=" form-control mb-2" @error('image') is-invalid @enderror>
+                            @error('image')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            <textarea name="description" id="" cols="30" rows="10" class=" form-control mb-2" @error('description') is-invalid @enderror> {{ $blogDetails->description }}</textarea>
+                            @error('description')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
+
                                 <!-- i don't know whether adding d-flex in the above div could change their display -->
-                            <input type="number" name="fee" value="{{ $blogDetails->fee }}"  class=" form-control mb-2" id="">
-                            <input type="text" name="address" value="{{ $blogDetails->address }}"  class=" form-control mb-2" id="">
+                            <input type="number" name="fee" value="{{ $blogDetails->fee }}"  class=" form-control mb-2" @error('fee') is-invalid @enderror>
+                            @error('fee')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            <input type="text" name="address" value="{{ $blogDetails->address }}"  class=" form-control mb-2" @error('address') is-invalid @enderror>
+                            @error('address')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
+
                             <select name="rating" id="" class=" form-control mb-2 @error('rating') is-invalid @enderror">
                                 <option value="">Choose Rating...</option>
                                 <option value="1" @if ( $blogDetails->rating == 1) selected @endif >1 stars</option>
@@ -35,7 +54,10 @@
                                 <option value="4" @if ( $blogDetails->rating == 4) selected @endif >4 stars</option>
                                 <option value="5" @if ( $blogDetails->rating == 5) selected @endif >5 stars</option>
                             </select>
-                            </div>
+                            @error('rating')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
+
                             <button type="submit" class="btn btn-danger mt-3">CREATE</button>
 
                         <button class="btn btn-dark mt-3 " onclick="history.back()"> GO BACK </button> {{-- JS method --}}

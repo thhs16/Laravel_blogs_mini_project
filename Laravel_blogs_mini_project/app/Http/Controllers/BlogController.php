@@ -89,7 +89,9 @@ class BlogController extends Controller
 
     // Update page
     public function update(Request $request){
-        dd($request);
+
+        // dd($request->toArray()); // array
+        $this->checkBlogsValidation($request);
     }
 
     // check blogs validation

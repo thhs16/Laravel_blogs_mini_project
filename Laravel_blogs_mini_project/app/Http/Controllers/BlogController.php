@@ -92,17 +92,19 @@ class BlogController extends Controller
 
         // dd($request->toArray()); // array
         $this->checkBlogsValidation($request);
+
     }
 
     // check blogs validation
     private function checkBlogsValidation($request){
+
         return $validator = $request->validate([
             'title' => 'required' ,
             'description' => 'required' ,
-            'fee' => 'required',
+            'fee' => 'required' ,
             'address' => 'required' ,
             'rating' => 'required' ,
-            'image.*' => 'mimes:png,jpg,jpeg'
+            'image' => 'mimes:png,jpg,jpeg | file'
         ]);
     }
 

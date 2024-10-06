@@ -17,7 +17,10 @@
                             </div>
                         @endif
 
-                        <input type="file" name="image" class="form-control mb-2" onchange="loadFile(event)">
+                        <input type="file" name="image" class="form-control mb-2 @error('image') is-invalid @enderror" onchange="loadFile(event)">
+                        @error('image')
+                                <div class=" invalid-feedback">{{ $message }}</div>
+                        @enderror
 
                     </div>
 
@@ -25,23 +28,23 @@
 
                     <div class="col-8">
 
-                            <input type="text" name="title" value="{{ $blogDetails->title }}" class=" form-control mb-2" @error('image') is-invalid @enderror>
-                            @error('image')
+                            <input type="text" name="title" value="{{ old('title', $blogDetails->title) }}" class=" form-control mb-2 @error('title') is-invalid @enderror">
+                            @error('title')
                                 <div class=" invalid-feedback">{{ $message }}</div>
                             @enderror
 
-                            <textarea name="description" id="" cols="30" rows="10" class=" form-control mb-2" @error('description') is-invalid @enderror> {{ $blogDetails->description }}</textarea>
+                            <textarea name="description" id="" cols="30" rows="10" class=" form-control mb-2 @error('description') is-invalid @enderror"> {{ old('description', $blogDetails->description) }}</textarea>
                             @error('description')
                                 <div class=" invalid-feedback">{{ $message }}</div>
                             @enderror
 
                                 <!-- i don't know whether adding d-flex in the above div could change their display -->
-                            <input type="number" name="fee" value="{{ $blogDetails->fee }}"  class=" form-control mb-2" @error('fee') is-invalid @enderror>
+                            <input type="number" name="fee" value="{{ old('fee', $blogDetails->fee) }}"  class=" form-control mb-2 @error('fee') is-invalid @enderror ">
                             @error('fee')
                                 <div class=" invalid-feedback">{{ $message }}</div>
                             @enderror
 
-                            <input type="text" name="address" value="{{ $blogDetails->address }}"  class=" form-control mb-2" @error('address') is-invalid @enderror>
+                            <input type="text" name="address" value="{{ old('address', $blogDetails->address) }}"  class=" form-control mb-2 @error('address') is-invalid @enderror">
                             @error('address')
                                 <div class=" invalid-feedback">{{ $message }}</div>
                             @enderror

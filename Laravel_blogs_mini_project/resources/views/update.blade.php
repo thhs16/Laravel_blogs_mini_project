@@ -4,7 +4,7 @@
 
     <div class="container mt-5">
 
-        <form action="{{ route('blogUpdate') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('blogUpdate', $blogDetails->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
                 <div class="row">
                     <div class="col-4">

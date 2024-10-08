@@ -90,8 +90,20 @@ class BlogController extends Controller
     // Update page
     public function update(Request $request){
 
+        dd($request->toArray());
+        // dd($id);
+
         // dd($request->toArray()); // array
         $this->checkBlogsValidation($request);
+
+        // checking img presense in form data
+        if( $request->hasFile('image') ){
+            $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
+            $request->file('image')->move( public_path() . '/uploads' , $userImgName );
+            $data['image'] = $userImgName;
+        } else {
+            dd('Image is empty.');
+        }
 
     }
 
@@ -99,7 +111,7 @@ class BlogController extends Controller
     private function checkBlogsValidation($request){
 
         return $validator = $request->validate([
-            'title' => 'required' ,
+            'title' => 'required|unique:blogs,title' , // to not let two same data in the "title" table field of "blogs" table
             'description' => 'required' ,
             'fee' => 'required' ,
             'address' => 'required' ,

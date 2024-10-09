@@ -90,19 +90,31 @@ class BlogController extends Controller
     // Update page
     public function update(Request $request){
 
-        dd($request->toArray());
-        // dd($id);
-
-        // dd($request->toArray()); // array
+        // Update form validation + title unique validation
         $this->checkBlogsValidation($request);
 
         // checking img presense in form data
         if( $request->hasFile('image') ){
+
+            // dd('from has file scope');
+
+            // giving the name of the new image
             $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
+
+            // adding new image to the local storage
             $request->file('image')->move( public_path() . '/uploads' , $userImgName );
+
+            // adding new image to db
             $data['image'] = $userImgName;
+
+            // deleting old image
+            dd( public_path() . '/uploads' , $request->oldImageName );
+            unlink( public_path() . '/uploads' , $request->oldImageName );
+
         } else {
-            dd('Image is empty.');
+
+            // $request->oldImageName is from DataBase sent from UI
+            $data['image'] = $request->oldImageName == null ? null : $request->oldImageName;
         }
 
     }

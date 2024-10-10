@@ -35,10 +35,10 @@ class BlogController extends Controller
             // checking img presense in form data
             if( $request->hasFile('image') ){
                 $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
-                $request->file('image')->move( public_path() . '/uploads' , $userImgName );
+                $request->file('image')->move( public_path() . '/uploads/' , $userImgName );
                 $data['image'] = $userImgName;
             } else {
-                dd('Image is empty.');
+                $data['image'] = null ;
             }
 
             // adding data to db
@@ -93,6 +93,9 @@ class BlogController extends Controller
         // Update form validation + title unique validation
         $this->checkBlogsValidation($request);
 
+        // what to add in the db tables
+        $data = $this->requestBlogData($request);
+
         // checking img presense in form data
         if( $request->hasFile('image') ){
 
@@ -102,15 +105,17 @@ class BlogController extends Controller
             $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
 
             // adding new image to the local storage
-            $request->file('image')->move( public_path() . '/uploads' , $userImgName );
+            $request->file('image')->move( public_path() . '/uploads/' , $userImgName );
 
             // adding new image to db
             $data['image'] = $userImgName;
 
             // deleting old image
-            dd( public_path() . '/uploads' , $request->oldImageName );
-            unlink( public_path() . '/uploads' , $request->oldImageName );
+            // unlink( public_path() . '/uploads/' . $request->oldImageName ); // unlink method success
 
+            // update data to table
+            // dd($id);
+            Blog::where('id', $id);
         } else {
 
             // $request->oldImageName is from DataBase sent from UI
@@ -135,14 +140,12 @@ class BlogController extends Controller
     // Request blog data
     private function requestBlogData($formData){
         return [
-            'title' => $formData->title , // title in $fromData indicates the value of the name attribute of the form
+            'title' => $formData->title , // title in $fromData indicates the name attribute of the form
             'description' => $formData->description ,
             'fee' => $formData->fee ,
             'address' => $formData->address ,
             'rating' => $formData->rating ,
             'image' => null
         ];
-
-        $data = [];
     }
 }

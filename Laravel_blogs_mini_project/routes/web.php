@@ -15,4 +15,4 @@ Route::get('/blogs/details/{id}', [BlogController::class,'details'])->name('blog
 
 Route::get('/blogs/edit/{id}', [BlogController::class,'edit'])->name('blogEdit');
 
-Route::post('/blogs/update', [BlogController::class,'update'])->name('blogUpdate');
+Route::get('/blogs/update/{id}', [BlogController::class,'update'])->name('blogUpdate');

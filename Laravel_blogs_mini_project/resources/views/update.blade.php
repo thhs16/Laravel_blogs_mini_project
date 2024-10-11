@@ -4,7 +4,7 @@
 
     <div class="container mt-5">
 
-        <form action="{{ route('blogUpdate') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('blogUpdate', $blogDetails->id ) }}" method="GET" enctype="multipart/form-data">
             @csrf
 
                 <div class="row">
@@ -72,9 +72,9 @@
                             @enderror
 
 
-                            <button type="submit" class="btn btn-danger mt-3">CREATE</button>
+                            <button type="submit" class="btn btn-danger mt-3">UPDATE</button>
                             <button class="btn btn-dark mt-3 " onclick="history.back()"> GO BACK </button> {{-- JS method --}}
-                            
+
                     </div>
                 </div>
             </form>

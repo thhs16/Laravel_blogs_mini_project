@@ -96,10 +96,10 @@ class BlogController extends Controller
         // what to add in the db tables
         $data = $this->requestBlogData($request);
 
+        dd($id);
+
         // checking img presense in form data
         if( $request->hasFile('image') ){
-
-            // dd('from has file scope');
 
             // giving the name of the new image
             $userImgName = uniqid() . $request->file('image')->getClientOriginalName() ;
@@ -111,11 +111,12 @@ class BlogController extends Controller
             $data['image'] = $userImgName;
 
             // deleting old image
-            // unlink( public_path() . '/uploads/' . $request->oldImageName ); // unlink method success
+            unlink( public_path() . '/uploads/' . $request->oldImageName ); // unlink method success
 
             // update data to table
             // dd($id);
-            Blog::where('id', $id);
+            Blog::where('id', $id)->update($data);
+
         } else {
 
             // $request->oldImageName is from DataBase sent from UI
